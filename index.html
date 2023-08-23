@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Control Remote Roblox</title>
+  <style>
+    /* CSS styles */
+    .remote-container {
+      display: flex;
+      align-items: center;
+    }
+
+    #logo-container {
+      width: auto;
+      height: 200px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      justify-content: center;
+      align-items: center; 
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      align-content: center;
+      background-color: #2e2e2e;
+      color: #ffffff;
+      height: 50px;
+      font-size: small;
+    }
+
+    #footer {
+      padding-top: 15px;
+    }
+
+    .sound-button{
+      width: 50px; 
+      height: 50px; 
+      border-radius: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sound Control Buttons -->
+  <div class="sound-buttons-container" style="display: flex; justify-content: space-between; padding: 10px;">
+    <button id="activateSound" class="sound-button">🔈</button>
+    <button id="deactivateSound" class="sound-button">🔇</button>
+    <audio id="click-sound">
+      <source src="./assets/jazzy-abstract-beat-11254.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Logo and Title -->
+  <div id="logo-container">
+    <h1 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Control Remote Roblox</h1>
+    <img src="./assets/Roblox-Logo-Transparent-PNG.png" alt="" style="width: 50%;">
+  </div>
+
+  <!-- Remote Control Section -->
+  <section class="remote-section" style="display: flex; align-items: center; justify-content: center; padding-bottom: 20px;">
+    <div class="remote-container" style="display: block;">
+      <div id="antenne">
+        <div style="background-color: #ca0000; height: 25px; width: 40px; border-radius: 10px 10px 0px 0px; margin-left: 40%;"></div>
+        <div id="antenne-cable" style="background-color: #ca0000; height: 100px; width: 20px; margin-left: 45%;"></div>
+      </div>
+      <div class="remote-container" style="background-color: #2e2e2e;; justify-content: center; width: 200px; height: 300px; align-content: center;">
+        <div style="color: aliceblue; background-color: #ca0000; border: none; border-radius: 100%; width: 300px; height: 100px; margin-left: 25%; margin-right: 25%; box-shadow: 10px #6d5f5f;"> 
+          <button id="bouton-remote" style="width: 100%; height: 100%; border-radius: 100%; background-color: #ca0000;"></button>
+        </div>
+      </div>
+    </div>
+    <div style="width: 400px; height: 400px; margin-left: 50px; box-sizing: border-box; overflow: hidden; align-content: center;">
+      <img id="robloxFriends" src="" alt="" style="width: 100%; height: 100%; opacity: 0;">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p id="footer"></p>
+  </footer>
+
+  <script>
+    // JavaScript code
+    var boutonRemote = document.getElementById("bouton-remote");
+    var imgContainer = document.getElementById("robloxFriends");
+    var clickSound = document.getElementById("click-sound");
+    var musiqueOn = document.getElementById("activateSound");
+    var musiqueOff = document.getElementById("deactivateSound");
+
+    let images = [
+    "./assets/pic1.jpg",
+      "./assets/pic2.jpg",
+      "./assets/pic3.jpg",
+      "./assets/pic4.jpg",
+      "./assets/pic5.jpg",
+      "./assets/pic6.jpg",
+      "https://media1.giphy.com/media/p9PAld4PBMI6Hl67Qa/giphy.gif?cid=ecf05e477ndb4wdepdy2jckoajn5brywfvuwafnrhmywwdmc&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+      "https://media2.giphy.com/media/NWq8IgIaCv2pG15wXp/giphy.gif?cid=ecf05e4719369gm6d6461vd4t1ajyz54lazy3gj6ilunrqa1&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+      "https://media1.giphy.com/media/u6u8Cz8sag2HJa8pJR/giphy.gif?cid=ecf05e4719369gm6d6461vd4t1ajyz54lazy3gj6ilunrqa1&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+      "https://media2.giphy.com/media/XdUzjIkQ4tmDQwYckP/giphy.gif?cid=ecf05e47oo1bki2p6tx0s3ct9hplhispmfua2kwbexfphgef&ep=v1_gifs_related&rid=giphy.gif&ct=g",
+      "https://pic2-cdn.creality.com/crealityCloud/common/4c3162047c33276724152802f7b864ad.png",
+      "https://cdn270.picsart.com/59a9c133-726a-4498-a2fa-c7494ce700bb/422038885041211.png",
+      "./assets/zolphius_Full.png",
+      "https://files.cults3d.com/uploaders/13865489/illustration-file/71e6a132-0277-44f9-b2d8-cc48c6715a89/Pajaro.gif"
+    ];
+
+    var currentImageIndex = 0;
+    var isSoundOn = true;
+
+    boutonRemote.addEventListener("click", function() {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      var imageUrl = images[currentImageIndex];
+      robloxFriends.src = imageUrl;
+      boutonRemote.style.background = "#ca0000";
+      imgContainer.style.opacity = "1";
+    });
+
+    musiqueOn.addEventListener("click", function() { 
+      isSoundOn = true;
+      clickSound.currentTime = 0;
+      clickSound.play();
+    });
+
+    musiqueOff.addEventListener("click", function() {
+      isSoundOn = false;
+      clickSound.pause();
+    });
+
+    // Update footer
+    function updateFooter() {
+      var credits = document.getElementById("footer");
+      var date = new Date().getFullYear();
+      credits.innerHTML = 'Ericson Pereira &copy; ' + date;
+    }
+
+    updateFooter();
+  </script>
+</body>
+</html>
